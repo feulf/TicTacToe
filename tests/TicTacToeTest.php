@@ -22,18 +22,40 @@ class TicTacToeTest extends PHPUnit_Framework_TestCase {
         [o,_,x]
       ];
 
-    function testHorizontal() {
-        $tic_tac_toe = new TicTacToe($this->horizontal);
-        $this->assertEquals(x, $tic_tac_toe->getWinner());
+    private $player2_win = [
+        [x,x,o],
+        [x,o,_],
+        [o,_,x]
+    ];
+
+    private $uncompleted = [
+        [x,o,_],
+        [o,_,_],
+        [o,_,x]
+    ];
+
+    private $completed_no_winner = [
+        [x,o,o],
+        [o,x,x],
+        [o,x,o]
+    ];
+
+    function testGetWinner() {
+        $this->assertEquals(x, (new TicTacToe($this->horizontal))->getWinner());
+        $this->assertEquals(x, (new TicTacToe($this->vertical))->getWinner());
+        $this->assertEquals(x, (new TicTacToe($this->diagonal))->getWinner());
+        $this->assertEquals(o, (new TicTacToe($this->player2_win))->getWinner());
+        $this->assertEquals(_, (new TicTacToe($this->uncompleted))->getWinner());
+        $this->assertEquals(_, (new TicTacToe($this->completed_no_winner))->getWinner());
     }
 
-    function testVertical() {
-        $tic_tac_toe = new TicTacToe($this->vertical);
-        $this->assertEquals(x, $tic_tac_toe->getWinner());
+    function testIsGameCompleted() {
+        $this->assertTrue((new TicTacToe($this->horizontal))->isGameCompleted());
+        $this->assertTrue((new TicTacToe($this->vertical))->isGameCompleted());
+        $this->assertTrue((new TicTacToe($this->diagonal))->isGameCompleted());
+        $this->assertTrue((new TicTacToe($this->player2_win))->isGameCompleted());
+        $this->assertFalse((new TicTacToe($this->uncompleted))->isGameCompleted());
+        $this->assertTrue((new TicTacToe($this->completed_no_winner))->isGameCompleted());
     }
 
-    function testDiagonal() {
-        $tic_tac_toe = new TicTacToe($this->diagonal);
-        $this->assertEquals(x, $tic_tac_toe->getWinner());
-    }
 }

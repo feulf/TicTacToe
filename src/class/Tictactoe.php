@@ -13,6 +13,28 @@ class TicTacToe {
         $this->table = $table;
     }
 
+    /**
+     * @return boolean true if completed, false if not completed
+     */
+    function isGameCompleted() {
+        $winner = $this->getWinner();
+        if ($winner !== _) {
+            return true;
+        }
+
+        for ($i=0; $i<3; $i++) {
+            for ($j=0; $j<3; $j++) {
+                if ($this->table[$i][$j] === _) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @return $winner Returns the winner id or null if no winner
+     */
     function getWinner() {
 
         if ($winner = $this->checkHorizontal()) {
@@ -28,6 +50,9 @@ class TicTacToe {
         }
     }
 
+    /**
+     * @return winner
+     */
     private function checkHorizontal() {
         for ($i=0; $i<3; $i++) {
             $winner = $this->table[0][$i];
