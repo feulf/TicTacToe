@@ -8,6 +8,7 @@ require_once dirname(__DIR__) . "/constants.php";
 class TicTacToe {
 
     private $table = [];
+    private $next_player = x; // first player is player 1
 
     function __construct($table = []) {
         if ($table) {
@@ -19,6 +20,43 @@ class TicTacToe {
 
     function getTable() {
         return $this->table;
+    }
+
+    /**
+     * @param $cell int chose the cell number
+     *
+     *     1 | 2 | 3
+     *    -----------
+     *     4 | 5 | 6
+     *    -----------
+     *     7 | 8 | 9
+     *
+     */
+    function play($cell) {
+
+        switch($cell) {
+            case 1: $i = 0; $j = 0; break;
+            case 2: $i = 0; $j = 1; break;
+            case 3: $i = 0; $j = 2; break;
+            case 4: $i = 1; $j = 0; break;
+            case 5: $i = 1; $j = 1; break;
+            case 6: $i = 1; $j = 2; break;
+            case 7: $i = 2; $j = 0; break;
+            case 8: $i = 2; $j = 1; break;
+            case 9: $i = 2; $j = 2; break;
+        }
+
+
+        if ($this->table[$i][$j] === _) {
+            $this->table[$i][$j] = $this->next_player;
+
+            // set the next player
+            $this->next_player = $this->next_player === x ? o : x;
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -63,7 +101,7 @@ class TicTacToe {
      */
     private function checkHorizontal() {
         for ($i=0; $i<3; $i++) {
-            $winner = $this->table[0][$i];
+            $winner = $this->table[$i][0];
 
             for ($j=0; $j<3; $j++) {
                 if ($this->table[$i][$j] != $winner) {
@@ -81,7 +119,7 @@ class TicTacToe {
 
     private function checkVertical() {
         for ($i=0; $i<3; $i++) {
-            $winner = $this->table[$i][0];
+            $winner = $this->table[0][$i];
 
             for ($j=0; $j<3; $j++) {
                 if ($this->table[$j][$i] != $winner) {
