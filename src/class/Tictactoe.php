@@ -10,7 +10,15 @@ class TicTacToe {
     private $table = [];
 
     function __construct($table = []) {
-        $this->table = $table;
+        if ($table) {
+            $this->table = $table;
+        } else {
+            $this->table = $this->initTable();
+        }
+    }
+
+    function getTable() {
+        return $this->table;
     }
 
     /**
@@ -112,6 +120,16 @@ class TicTacToe {
         }
 
         return $winner;
+    }
+
+    private function initTable() {
+        $table = [];
+        for ($i=0; $i<3; $i++) {
+            for ($j=0; $j<3; $j++) {
+                $table[$i][$j] = _;
+            }
+        }
+        return $table;
     }
 
 }

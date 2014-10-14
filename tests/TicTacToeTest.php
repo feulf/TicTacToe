@@ -58,4 +58,13 @@ class TicTacToeTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue((new TicTacToe($this->completed_no_winner))->isGameCompleted());
     }
 
+    function testInit() {
+        $table = (new TicTacToe())->getTable();
+        for ($i=0;$i<3;$i++){
+            for ($j=0;$j<3;$j++){
+                $this->assertEquals(_, $table[$i][$j]);
+            }
+        }
+    }
+
 }
