@@ -138,18 +138,13 @@ class ComputerPlayer extends Player{
 
     public function takeCorner($table, $symbol) {
 
+        $opponent_symbol = $symbol == x ? o : x;
+
         $corners = [
             $table[0][0],
             $table[0][2],
             $table[2][0],
             $table[2][2]
-        ];
-
-        $sides = [
-            $table[1][0],
-            $table[0][1],
-            $table[1][1],
-            $table[1][1]
         ];
 
         $counter = 0;
@@ -181,24 +176,23 @@ class ComputerPlayer extends Player{
             }
         }
 
-        // if there's one or more free corner and the center is not taken, take a corner
+        // if center is occupied and there are only 2 free corner take one of the sides
         if ($counter >= 2 and $table[1][1]) {
             $corner_number = 1;
             $available = [];
-            foreach ($sides as $key => $side) {
-                if ($side === _) {
-                    array_push($available, $key);
-                }
-            }
-            $cell = $available[ array_rand($available) ];
-            switch($cell) {
-                case 0: return 2;
-                case 1: return 4;
-                case 2: return 6;
-                case 3: return 8;
-            }
 
-
+            if ($table[0][1] === _ and ($table[0][0] == $opponent_symbol or $table[0][2] == $opponent_symbol) ) {
+                return 2;
+            }
+            if ($table[1][0] === _ and ($table[0][0] == $opponent_symbol or $table[2][0] == $opponent_symbol) ) {
+                return 4;
+            }
+            if ($table[1][2] === _ and ($table[0][2] == $opponent_symbol or $table[2][2] == $opponent_symbol) ) {
+                return 6;
+            }
+            if ($table[2][1] === _ and ($table[2][0] == $opponent_symbol or $table[2][2] == $opponent_symbol) ) {
+                return 8;
+            }
         }
 
     }

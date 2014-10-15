@@ -53,7 +53,8 @@ class Game {
             echo "\n    Game Over     \n\n";
             $this->games_counter++;
 
-        } while (strtolower($this->input("Do you want to play again? [yes]")) === "yes");
+            $play_again = strtolower($this->input("Do you want to play again? [yes]"));
+        } while ( $play_again == "yes" || $play_again == "");
 
         echo "Goodbye\n";
         sleep(1);
@@ -87,6 +88,10 @@ class Game {
 
             if ($tic_tac_toe->getWinner() == x) {
                 return x;
+            }
+
+            if ($tic_tac_toe->isGameCompleted()) {
+                return false;
             }
 
             while(1){
