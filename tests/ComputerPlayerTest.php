@@ -83,8 +83,8 @@ class ComputerPlayerTest extends PHPUnit_Framework_TestCase {
     ];
 
     private $corner5 = [
-        [o,_,_],
-        [_,x,_],
+        [x,_,_],
+        [_,o,_],
         [_,_,x]
     ];
 
@@ -137,8 +137,10 @@ class ComputerPlayerTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(7, $player->takeCorner($this->corner2, x));
         $this->assertEquals(3, $player->takeCorner($this->corner3, x));
         $this->assertEquals(1, $player->takeCorner($this->corner4, x));
-        $this->assertEquals(3, $player->takeCorner($this->corner5, o));
-        $this->assertEquals(7, $player->takeCorner($this->corner6, o));
+
+        // it play random in the sides
+        $this->assertTrue(in_array($player->computerMove($this->corner5, o), [2,4,6,8]));
+        $this->assertEquals(7, $player->computerMove($this->corner6, o));
     }
 
     function testCenter() {

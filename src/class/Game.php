@@ -11,6 +11,10 @@ class Game {
     const COLOR_PLAYER2 = "\e[95m";
     const COLOR_DEFAULT = "\e[0m";
 
+    private $games_counter = 1,
+            $win_player_1 = 0,
+            $win_player_2 = 0;
+
     function init() {
     }
 
@@ -33,19 +37,21 @@ class Game {
         }
 
         do {
-
             $winner = $this->play($player1, $player2);
             switch ($winner) {
                 case x:
+                    $this->win_player_1++;
                     echo self::COLOR_PLAYER1 . $player1->getName() . self::COLOR_DEFAULT . " wins the game\n";
                     break;
                 case o:
+                    $this->win_player_2++;
                     echo self::COLOR_PLAYER2 . $player2->getName() . self::COLOR_DEFAULT . " wins the game\n";
                     break;
                 default:
                     echo "Nobody wins.";
             }
             echo "\n    Game Over     \n\n";
+            $this->games_counter++;
 
         } while (strtolower($this->input("Do you want to play again? [yes]")) === "yes");
 
@@ -113,8 +119,9 @@ class Game {
         $table = $tic_tac_toe->getTable();
         echo "Summary: \n";
 
+        echo $this->games_counter . " game(s) played\n";
         echo self::COLOR_PLAYER1 . $player1->getName() . self::COLOR_DEFAULT . " vs " . self::COLOR_PLAYER2 . $player2->getName() . self::COLOR_DEFAULT . "\n";
-        echo self::COLOR_PLAYER1 . "100" . self::COLOR_DEFAULT . "  -  " . self::COLOR_PLAYER2 . "100" . self::COLOR_DEFAULT . "\n";
+        echo self::COLOR_PLAYER1 . $this->win_player_1 . self::COLOR_DEFAULT . "  -  " . self::COLOR_PLAYER2 . $this->win_player_2 . self::COLOR_DEFAULT . "\n";
 
         echo "\n\n";
 

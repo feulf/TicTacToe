@@ -28,14 +28,14 @@ class ComputerPlayer extends Player{
             return $move;
         }
 
-        // take one corner if they are all free
-        $move = $this->takeCorner($table, $symbol);
+        // take the center if is free
+        $move = $this->takeCenter($table, $symbol);
         if ($move) {
             return $move;
         }
 
-        // take the center if is free
-        $move = $this->takeCenter($table, $symbol);
+        // take one corner if they are all free
+        $move = $this->takeCorner($table, $symbol);
         if ($move) {
             return $move;
         }
@@ -145,6 +145,13 @@ class ComputerPlayer extends Player{
             $table[2][2]
         ];
 
+        $sides = [
+            $table[1][0],
+            $table[0][1],
+            $table[1][1],
+            $table[1][1]
+        ];
+
         $counter = 0;
         foreach ($corners as $corner) {
             if ($corner === _) {
@@ -175,19 +182,22 @@ class ComputerPlayer extends Player{
         }
 
         // if there's one or more free corner and the center is not taken, take a corner
-        if ($counter >= 1 and $table[1][1]) {
+        if ($counter >= 2 and $table[1][1]) {
             $corner_number = 1;
-            foreach ($corners as $key => $corner) {
-                if ($corner === _) {
-                    echo $key;
-                    switch($key) {
-                        case 0: return 1;
-                        case 1: return 3;
-                        case 2: return 7;
-                        case 3: return 9;
-                    }
+            $available = [];
+            foreach ($sides as $key => $side) {
+                if ($side === _) {
+                    array_push($available, $key);
                 }
             }
+            $cell = $available[ array_rand($available) ];
+            switch($cell) {
+                case 0: return 2;
+                case 1: return 4;
+                case 2: return 6;
+                case 3: return 8;
+            }
+
 
         }
 
