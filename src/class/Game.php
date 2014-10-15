@@ -19,10 +19,18 @@ class Game {
         $this->clearScreen();
 
         $player1_name = $this->input("Insert player 1 name (leave empty for computer player): ", self::COLOR_PLAYER1);
-        $player1 = new Player($player1_name);
+        if ($player1_name !== "") {
+            $player1 = new Player($player1_name);
+        } else {
+            $player1 = new ComputerPlayer("Computer");
+        }
 
         $player2_name = $this->input("Insert player 2 name (leave empty for computer player): ", self::COLOR_PLAYER2);
-        $player2 = new Player($player2_name);
+        if ($player2_name !== "") {
+            $player2 = new Player($player2_name);
+        } else {
+            $player2 = new ComputerPlayer("Computer");
+        }
 
         do {
 
@@ -56,7 +64,11 @@ class Game {
             $this->printSummary($tic_tac_toe, $player1, $player2);
 
             while(1) {
-                $cell = $this->input($player1->getName() . " your turn: ");
+                if ($player1->isHuman()) {
+                    $cell = $this->input($player1->getName() . " your turn: ");
+                } else {
+                    $cell = $player1->computerMove($tic_tac_toe->getTable(), x);
+                }
                 $move = $tic_tac_toe->play($cell);
                 $this->printSummary($tic_tac_toe, $player1, $player2);
                 if (!$move) {
@@ -72,7 +84,11 @@ class Game {
             }
 
             while(1){
-                $cell = $this->input($player2->getName() . " your turn: ");
+                if ($player2->isHuman()) {
+                    $cell = $this->input($player2->getName() . " your turn: ");
+                } else {
+                    $cell = $player2->computerMove($tic_tac_toe->getTable(), o);
+                }
                 $move = $tic_tac_toe->play($cell);
                 $this->printSummary($tic_tac_toe, $player1, $player2);
                 if (!$move) {
@@ -107,14 +123,14 @@ class Game {
                 echo "-----------\n";
             }
             for ($j=0; $j<3; $j++) {
-                $sign = $count;
+                $symbol = $count;
                 if ($table[$i][$j] === x) {
-                    $sign = self::COLOR_PLAYER1 . "x" . self::COLOR_DEFAULT;
+                    $symbol = self::COLOR_PLAYER1 . "x" . self::COLOR_DEFAULT;
                 }
                 if ($table[$i][$j] === o) {
-                    $sign = self::COLOR_PLAYER2 . "o" . self::COLOR_DEFAULT;
+                    $symbol = self::COLOR_PLAYER2 . "o" . self::COLOR_DEFAULT;
                 }
-                echo " {$sign} ";
+                echo " {$symbol} ";
                 if ($j < 2) {
                     echo  "|";
                 }
