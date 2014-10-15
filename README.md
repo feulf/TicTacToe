@@ -9,8 +9,8 @@ Tic Tac Toe
 
 How to
 ------
-Run into the command line ``` 
-php tic_tac_toe.php
-```
+Run into the command line
+  
+  php tic_tac_toe.php
 
 Have fun! 
