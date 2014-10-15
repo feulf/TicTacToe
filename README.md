@@ -11,6 +11,6 @@ How to
 ------
 Run into the command line
   
-  php tic_tac_toe.php
+``` php tic_tac_toe.php ```
 
 Have fun! 
