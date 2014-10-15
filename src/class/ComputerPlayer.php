@@ -156,18 +156,26 @@ class ComputerPlayer extends Player{
 
         // all corner are available take top left
         if ($counter == 4) {
-            return 1;
+            $corner_number = rand(0,3);
+            switch($corner_number) {
+                case 0: return 9;
+                case 1: return 7;
+                case 2: return 3;
+                case 3: return 1;
+            }
         }
 
         // only 3 corner cells are available, position in the opposite of the current corner cell occupied
         if ($counter == 3) {
             $corner_number = 1;
+            $available = [];
             foreach ($corners as $key => $corner) {
                 if ($corner !== _) {
-                    $corner_number = $key;
+                    array_push($available, $key);
                 }
             }
 
+            $corner_number = $available[ array_rand($available) ];
             switch($corner_number) {
                 case 0: return 9;
                 case 1: return 7;
@@ -182,17 +190,19 @@ class ComputerPlayer extends Player{
             $available = [];
 
             if ($table[0][1] === _ and ($table[0][0] == $opponent_symbol or $table[0][2] == $opponent_symbol) ) {
-                return 2;
+                array_push($available, 2);
             }
             if ($table[1][0] === _ and ($table[0][0] == $opponent_symbol or $table[2][0] == $opponent_symbol) ) {
-                return 4;
+                array_push($available, 4);
             }
             if ($table[1][2] === _ and ($table[0][2] == $opponent_symbol or $table[2][2] == $opponent_symbol) ) {
-                return 6;
+                array_push($available, 6);
             }
             if ($table[2][1] === _ and ($table[2][0] == $opponent_symbol or $table[2][2] == $opponent_symbol) ) {
-                return 8;
+                array_push($available, 8);
             }
+
+            return $available[ array_rand($available) ];
         }
 
     }

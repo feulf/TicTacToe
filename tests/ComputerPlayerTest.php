@@ -133,7 +133,7 @@ class ComputerPlayerTest extends PHPUnit_Framework_TestCase {
 
     function testTakeCorner() {
         $player = new ComputerPlayer("CPU");
-        $this->assertEquals(1, $player->takeCorner($this->corner, x));
+        $this->assertTrue(in_array($player->takeCorner($this->corner, x), [1,3,7,9]));
         $this->assertEquals(7, $player->takeCorner($this->corner2, x));
         $this->assertEquals(3, $player->takeCorner($this->corner3, x));
         $this->assertEquals(1, $player->takeCorner($this->corner4, x));
